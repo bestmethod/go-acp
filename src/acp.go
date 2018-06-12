@@ -52,10 +52,22 @@ type CopyStruct struct {
 	bufferFileNo [2]int
 	Files        []files
 	Concat       bool
+	r2w          [2]chan int
+	w2r          [2]chan int
 }
 
 func main() {
 	Copy := new(CopyStruct)
+	a := make(chan int,1)
+	Copy.r2w[0] = a
+	a = make(chan int,1)
+	Copy.r2w[1] = a
+	a = make(chan int,1)
+	Copy.w2r[0] = a
+	a = make(chan int,1)
+	Copy.w2r[1] = a
+	Copy.w2r[0] <- 1
+	Copy.w2r[1] <- 1
 	p := flags.NewParser(&Copy.Conf, flags.Default^flags.PrintErrors)
 	var err error
 	Copy.Conf.Files, err = p.ParseArgs(os.Args)
@@ -285,6 +297,7 @@ func (c *CopyStruct) readFiles() {
 					log.Fatalf("ERROR: cannot open source file %s\n", f)
 				}
 				for err != io.EOF {
+					<-c.w2r[offset]
 					if c.readlen[offset] == 0 {
 						tmplen, err = fd.Read(c.buffers[offset])
 						if err != nil && err != io.EOF {
@@ -294,6 +307,7 @@ func (c *CopyStruct) readFiles() {
 						if tmplen != 0 {
 							c.bufferFileNo[offset] = ll
 							c.readlen[offset] = tmplen
+							c.r2w[offset] <- 1
 							if offset == 0 {
 								offset = 1
 							} else {
@@ -317,6 +331,7 @@ func (c *CopyStruct) writeFiles() {
 	llst := -1
 	for c.TotalSize > c.CopiedBytes {
 		go c.reportProgress(false)
+		<-c.r2w[offset]
 		if c.readlen[offset] != 0 {
 			if ll != c.bufferFileNo[offset] {
 				if c.Conf.ReportFileStartDone == true {
@@ -384,6 +399,7 @@ func (c *CopyStruct) writeFiles() {
 				c.BytesPrinted = c.BytesPrinted + int64(c.readlen[offset])
 			}
 			c.readlen[offset] = 0
+			c.w2r[offset] <- 1
 			if offset == 0 {
 				offset = 1
 			} else {

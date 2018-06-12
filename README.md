@@ -12,6 +12,24 @@ Copying dirs and files, link preservation(and not), concat multiple files into o
 
 Note that you need buffer-size X 2 (times two) of RAM, as for threaded copy we use 2 buffers. So if buffer-size is 1GB to minimize a very large file fragmentation, you need 2GB of RAM to run the `acp`
 
+### Where will multithreading help
+
+Obviously, it won't help if you are copying a file or files on a laptop on a local disk from one directory to another.
+
+It will help if you have 2 disks and are copying between them. It will also help if you are dealing with large disk arrays that can take multiple r/w simultanously.
+
+It will help if you are copying between 2 network locations using your machine as a proxy.
+
+It will help if you are copying from network or local to a network drive.
+
+It will somewhat help if you are copying between local and network.
+
+### Where will crazy-large buffers help
+
+This was actually done to help create large files for virtual machines. Setting buffer size to 1GB during copy to a netapp filer where these were hosted, made the virtual machines run much faster as the files were not as fragmented (single 1GB flush will attempt on most filesystems to find a continuous 1GB space if possible to minimise fragmentation).
+
+So, cases like this one. To fight off fragmentation. Most filesystems play nice and properly handle large buffer write calls by ensuring fragmentation is minimal.
+
 ### Usage
 
 Get the binary for your OS from the bin/ directory.
