@@ -14,6 +14,7 @@ build:
         - env GOOS=linux GOARCH=amd64 go build -o acp.linux.bin
         - env GOODS=osx GOARCH=amd64 go build -o acp.osx.bin
         - env GOOS=windows GOARCH=amd64 go build -o acp.exe
+        - find / -name "acp.linux.bin"
     artifacts:
         paths:
             - /go/src/gitlab.com/bestmethod/go-acp/acp.linux.bin
