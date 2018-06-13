@@ -12,4 +12,12 @@ build:
     stage: build
     script:
         - godep restore
-        - godep go build
+        - env GOOS=linux GOARCH=amd64 godep go build -o acp.linux.bin
+        - env GOODS=osx GOARCH=amd64 godep go build -o acp.osx.bin
+        - env GOOS=windows GOARCH=amd64 godep go build -o acp.exe
+    artifacts:
+        paths:
+            - acp.linux.bin
+            - acp.osx.bin
+            - acp.exe
+
