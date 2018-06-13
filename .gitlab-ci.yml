@@ -5,12 +5,12 @@ stages:
 before_script:
     - go get gitlab.com/bestmethod/go-acp
     - go get -u github.com/jessevdk/go-flags
-    - cp -r /builds/bestmethod /go/src/github.com/bestmethod/
     - cd /go/src/gitlab.com/bestmethod/go-acp
 
 build:
     stage: build
     script:
+        - find / -name "acp.go"
         - env GOOS=linux GOARCH=amd64 go build -o acp.linux.bin
         - env GOODS=osx GOARCH=amd64 go build -o acp.osx.bin
         - env GOOS=windows GOARCH=amd64 go build -o acp.exe
