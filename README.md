@@ -32,7 +32,7 @@ So, cases like this one. To fight off fragmentation. Most filesystems play nice 
 
 ### Usage
 
-Get the binary for your OS from the bin/ directory.
+Get the binary for your OS from the build job artifacts. See https://gitlab.com/bestmethod/go-acp/-/jobs - with a download button on the right-hand side. Or enter the job and "Browse" artifacts.
 
 ```
 $ ./acp --help
