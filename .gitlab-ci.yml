@@ -11,7 +11,6 @@ before_script:
 build:
     stage: build
     script:
-        - godep restore
         - env GOOS=linux GOARCH=amd64 go build -o acp.linux.bin
         - env GOODS=osx GOARCH=amd64 go build -o acp.osx.bin
         - env GOOS=windows GOARCH=amd64 go build -o acp.exe
