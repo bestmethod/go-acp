@@ -16,7 +16,7 @@ build:
         - env GOOS=windows GOARCH=amd64 go build -o acp.exe
     artifacts:
         paths:
-            - acp.linux.bin
-            - acp.osx.bin
-            - acp.exe
+            - /go/src/gitlab.com/bestmethod/go-acp/acp.linux.bin
+            - /go/src/gitlab.com/bestmethod/go-acp/acp.osx.bin
+            - /go/src/gitlab.com/bestmethod/go-acp/acp.exe
 
