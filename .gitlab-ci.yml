@@ -9,13 +9,12 @@ before_script:
 build:
     stage: build
     script:
-        - env GOOS=linux GOARCH=amd64 go build -o ../acp.linux.bin
-        - env GOODS=osx GOARCH=amd64 go build -o ../acp.osx.bin
-        - env GOOS=windows GOARCH=amd64 go build -o ../acp.exe
+        - env GOOS=linux GOARCH=amd64 go build -o ../bin/linux/acp
+        - env GOODS=osx GOARCH=amd64 go build -o ../bin/osx/acp
+        - env GOOS=windows GOARCH=amd64 go build -o ../bin/window/acp.exe
         - cd ..
     artifacts:
         paths:
-            - acp.linux.bin
-            - acp.osx.bin
-            - acp.exe
-
+            - bin/linux
+            - bin/window
+            - bin/osx
