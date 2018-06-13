@@ -4,6 +4,7 @@ stages:
   
 before_script:
     - go get gitlab.com/bestmethod/go-acp
+    - go get -u github.com/jessevdk/go-flags
     - cp -r /builds/bestmethod /go/src/github.com/bestmethod/
     - cd /go/src/gitlab.com/bestmethod/go-acp
 
