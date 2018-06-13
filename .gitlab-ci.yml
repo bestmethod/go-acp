@@ -4,14 +4,15 @@ stages:
   
 before_script:
     - go get -u github.com/jessevdk/go-flags
-    - cd /builds/bestmethod/go-acp/
+    - cd /builds/bestmethod/go-acp/src
 
 build:
     stage: build
     script:
-        - env GOOS=linux GOARCH=amd64 go build -o acp.linux.bin
-        - env GOODS=osx GOARCH=amd64 go build -o acp.osx.bin
-        - env GOOS=windows GOARCH=amd64 go build -o acp.exe
+        - env GOOS=linux GOARCH=amd64 go build -o ../acp.linux.bin
+        - env GOODS=osx GOARCH=amd64 go build -o ../acp.osx.bin
+        - env GOOS=windows GOARCH=amd64 go build -o ../acp.exe
+        - cd ..
     artifacts:
         paths:
             - acp.linux.bin
