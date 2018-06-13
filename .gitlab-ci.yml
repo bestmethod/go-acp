@@ -9,6 +9,6 @@ before_script:
 
 build:
     stage: build
-  script:
-    - godep restore
-    - godep go build
+    script:
+        - godep restore
+        - godep go build
